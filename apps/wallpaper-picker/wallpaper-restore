@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+STATE="$HOME/.cache/wallpaper-picker/current"
+ASSETS="$HOME/.local/share/Steam/steamapps/common/wallpaper_engine/assets"
+
+[ ! -f "$STATE" ] && exit
+
+id=$(cat "$STATE")
+
+MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
+
+if [ -z "$MONITOR" ]; then
+    echo "Failed to detect active monitor."
+    exit 1
+fi
+
+nohup env \
+__NV_PRIME_RENDER_OFFLOAD=1 \
+__GLX_VENDOR_LIBRARY_NAME=nvidia \
+linux-wallpaperengine \
+    --screen-root "$MONITOR" \
+    --bg "$id" \
+    --assets-dir "$ASSETS" \
+    --fps 24 \
+    --silent \
+    --fullscreen-pause-only-active \
+>/dev/null 2>&1 &
