@@ -1,28 +1,44 @@
 # Caelestia Extras
 
-A collection of polished Quickshell applications for Caelestia and Hyprland.
+A collection of polished Quickshell applications for Caelestia and other Quickshell-based desktops.
+
+> Modern. Beautiful. Modular.
+
+---
 
 ## Planned Applications
 
-- 🖼 Wallpaper Browser
+- 🖼 Wallpaper Studio
 - 🎵 Audio Center
 - 📋 Clipboard Manager
 - 🎨 Theme Manager
-- 📶 Bluetooth Panel
-- 📊 System Widgets
+- 🦷 Bluetooth Center
+- 📊 System Monitor
 
-## Philosophy
+---
 
-Caelestia Extras focuses on creating native-feeling desktop utilities with:
+## Goals
 
-- Beautiful UI
+- Native Quickshell applications
 - Smooth animations
 - Keyboard-first workflow
+- Beautiful UI
 - High performance
-- Modular architecture
+- Easy to extend
 
-## Status
+---
 
-🚧 Early development
+## Roadmap
 
-The first application is the Wallpaper Browser.
+### Wallpaper Studio
+
+- [ ] Thumbnail grid
+- [ ] Live search
+- [ ] Favorites
+- [ ] Collections
+- [ ] Multi-monitor support
+- [ ] Random wallpapers
+
+---
+
+MIT License
