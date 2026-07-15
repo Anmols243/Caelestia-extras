@@ -1,0 +1,30 @@
+name: Bug Report
+description: Report a bug in Caelestia Extras.
+title: "[Bug]: "
+labels:
+  - bug
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      placeholder: Describe the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: Tell us how to reproduce it.
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: |
+        Hyprland:
+        Quickshell:
+        GPU:
+        Distro:
