@@ -1,0 +1,53 @@
+
+#!/usr/bin/env bash
+
+WORKSHOP="$HOME/.local/share/Steam/steamapps/workshop/content/431960"
+ASSETS="$HOME/.local/share/Steam/steamapps/common/wallpaper_engine/assets"
+STATE="$HOME/.cache/wallpaper-picker/current"
+
+declare -A MAP
+LIST=""
+
+for dir in "$WORKSHOP"/*; do
+    [ -d "$dir" ] || continue
+
+    id=$(basename "$dir")
+
+    title=$(jq -r '.title // empty' "$dir/project.json" 2>/dev/null)
+
+    if [ -z "$title" ]; then
+        title="$id"
+    fi
+
+    MAP["$title"]="$id"
+    LIST+="$title"$'\n'
+done
+
+selection=$(printf "%s" "$LIST" | sort | fuzzel --dmenu --prompt="󰸉 Wallpaper")
+
+[ -z "$selection" ] && exit
+
+id="${MAP[$selection]}"
+
+echo "$id" > "$STATE"
+
+MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
+
+if [ -z "$MONITOR" ]; then
+    echo "Failed to detect active monitor."
+    exit 1
+fi
+
+pkill linux-wallpaperengine
+
+nohup env \
+__NV_PRIME_RENDER_OFFLOAD=1 \
+__GLX_VENDOR_LIBRARY_NAME=nvidia \
+linux-wallpaperengine \
+    --screen-root "$MONITOR" \
+    --bg "$id" \
+    --assets-dir "$ASSETS" \
+    --fps 24 \
+    --silent \
+    --fullscreen-pause-only-active \
+>/dev/null 2>&1 &
