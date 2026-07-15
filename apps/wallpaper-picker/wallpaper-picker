@@ -1,6 +1,9 @@
 
 #!/usr/bin/env bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib/monitor.sh"
+
 WORKSHOP="$HOME/.local/share/Steam/steamapps/workshop/content/431960"
 ASSETS="$HOME/.local/share/Steam/steamapps/common/wallpaper_engine/assets"
 STATE="$HOME/.cache/wallpaper-picker/current"
@@ -31,7 +34,7 @@ id="${MAP[$selection]}"
 
 echo "$id" > "$STATE"
 
-MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
+MONITOR=$(get_active_monitor)
 
 if [ -z "$MONITOR" ]; then
     echo "Failed to detect active monitor."
